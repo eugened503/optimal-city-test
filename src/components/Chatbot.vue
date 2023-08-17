@@ -13,7 +13,7 @@
             <div class="card-body" ref="chatbox">
               <div class="wrapper d-flex flex-column">
                 <transition-group tag="ul" name="list" class="mb-0 mb-5 p-0">
-                  <li v-for="replica in isData.replicas" :key="replica.id">
+                  <li v-for="replica in isData?.replicas" :key="replica.id">
                     <div v-if="!replica.option" class="d-flex flex-row justify-content-start mb-4"
                       :class="[replica.author === 'human' ? 'user justify-content-end' : '']">
                       <img :src=imageUrl(replica.author) :alt="replica.author">
@@ -47,11 +47,12 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { v4 as uuidv4 } from 'uuid';
 import data from '@/data/data.json';
 
-const isData = ref(JSON.parse(JSON.stringify(data)));
+const dataCopy = JSON.parse(JSON.stringify(data));
+const isData = ref({ "replicas": [] });
 const chatbox = ref(null);
 const message = ref("");
 
@@ -62,7 +63,7 @@ const scrollHeightBehavior = () => {
 };
 
 const clearArr = () => {
-  const options = data.replicas.slice(1, 4);
+  const options = dataCopy.replicas.slice(1, 4);
   const idArr = options.map(option => Object.values(option)[0]);
   const newArr = isData.value.replicas.filter((replica) => {
     return !idArr.includes(replica.id);
@@ -140,6 +141,19 @@ const sendMessage = () => {
     message.value = '';
   }
 }
+
+onMounted(() => {
+  const salute = dataCopy.replicas.slice(0, 1);
+  const options = dataCopy.replicas.slice(1, 4);
+
+  setTimeout(() => updateList(...salute, []), 500);
+
+  setTimeout(function () {
+    for (let i = 0; i < options.length; i++) {
+      setTimeout((i) => updateList(options[i], []), i * 500, i);
+    }
+  }, 1500);
+})
 </script>
 
 <style lang="scss" scoped>
