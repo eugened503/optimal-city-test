@@ -176,6 +176,7 @@ const sendMessage = () => {
   img {
     width: 45px;
     height: 100%;
+    flex: 0 0 auto;
   }
 
   .message {
