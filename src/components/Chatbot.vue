@@ -12,7 +12,7 @@
             </div>
             <div class="card-body" ref="chatbox">
               <div class="wrapper d-flex flex-column">
-                <transition-group tag="ul" name="list" class="mb-0 mb-3 p-0">
+                <transition-group tag="ul" name="list" class="mb-0 mb-5 p-0">
                   <li v-for="replica in isData.replicas" :key="replica.id">
                     <div v-if="!replica.option" class="d-flex flex-row justify-content-start mb-4"
                       :class="[replica.author === 'human' ? 'user justify-content-end' : '']">
@@ -27,17 +27,16 @@
                     </button>
                   </li>
                 </transition-group>
-                <div class="card-footer text-muted d-flex justify-content-start align-items-center p-0 pt-3">
-                  <div class="input-group mb-0">
-                    <input type="text" v-model="message" @keyup.enter="sendMessage" class="form-control"
-                      placeholder="Введите сообщение" aria-label="Recipient's username"
-                      aria-describedby="button-addon2" />
-                    <button :disabled="message === ''" @click="sendMessage" class="btn bg-info fw-bold text-white"
-                      type="button" id="button-addon2">
-                      Send
-                    </button>
-                  </div>
-                </div>
+              </div>
+            </div>
+            <div class="card-footer text-muted d-flex justify-content-start align-items-center">
+              <div class="input-group mb-0">
+                <input type="text" v-model="message" @keyup.enter="sendMessage" class="form-control"
+                  placeholder="Введите сообщение" aria-label="Recipient's username" aria-describedby="button-addon2" />
+                <button :disabled="message === ''" @click="sendMessage" class="btn bg-info fw-bold text-white"
+                  type="button" id="button-addon2">
+                  Send
+                </button>
               </div>
             </div>
           </div>
@@ -194,10 +193,6 @@ const sendMessage = () => {
 
   .btn {
     padding-top: .55rem;
-  }
-
-  .card-footer {
-    background-color: inherit;
   }
 
   .user {
